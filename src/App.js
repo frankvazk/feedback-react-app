@@ -1,8 +1,11 @@
 import React from "react";
-import FeedbackItem from "./components/FeedbackItem";
 import Header from "./components/Header";
+import { useState } from "react";
+import FeedbackData from "./data/feedbackData";
+import FeedbackList from "./components/FeedbackList";
 
 const App = () => {
+  const [feedback, setFeedback] = useState(FeedbackData);
   const title = "Blog Post";
   const body = "This is my blogpost";
   const comments = [
@@ -12,12 +15,18 @@ const App = () => {
     { id: 4, comment: "Comment four" },
   ];
 
+  const deleteFeedback = (id) => {
+    if (window.confirm("Are you sure you want to delete?")) {
+      setFeedback(feedback.filter((item) => item.id !== id));
+    }
+  };
+
   const showComments = true;
   return (
     <>
       <Header />
       <div className="container">
-        <FeedbackItem />
+        <FeedbackList deleteFeedback={deleteFeedback} feedback={feedback} />
         <h1>{title.toUpperCase()}</h1>
         <h2>{body}</h2>
         <h3>Comments: {showComments ? comments.length : 0}</h3>
