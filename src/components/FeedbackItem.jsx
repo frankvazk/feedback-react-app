@@ -6,7 +6,7 @@ import { FaTimes } from "react-icons/fa";
 const FeedbackItem = ({ item, deleteFeedback }) => {
   return (
     <Card>
-      <div className="num-display">{item.id}</div>
+      <div className="num-display">{item.rating}</div>
       <button onClick={() => deleteFeedback(item.id)} className="close">
         <FaTimes color="purple" />
       </button>

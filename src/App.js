@@ -23,12 +23,20 @@ const App = () => {
     }
   };
 
+  const addFeedback = (newFeedback) => {
+    newFeedback.id =
+      feedback.reduce((prev, cur) =>
+        +prev.id > +cur.id ? +prev.id : +cur.id
+      ) + 1;
+    setFeedback((prev) => [newFeedback, ...prev]);
+  };
+
   const showComments = true;
   return (
     <>
       <Header />
       <div className="container">
-        <FeedbackForm />
+        <FeedbackForm addFeedback={addFeedback} />
         <FeedbackStats feedback={feedback} />
         <FeedbackList deleteFeedback={deleteFeedback} feedback={feedback} />
         <h1>{title.toUpperCase()}</h1>
