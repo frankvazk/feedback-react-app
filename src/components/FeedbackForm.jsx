@@ -5,11 +5,11 @@ import Button from "./shared/Button";
 import Card from "./shared/Card";
 
 const FeedbackForm = () => {
-  const { addFeedback } = useContext(FeedbackContext);
-  const [text, setText] = useState("");
+  const { addFeedback, text, setText, rating, setRating } =
+    useContext(FeedbackContext);
+
   const [isDisabled, setIsDisabled] = useState(true);
   const [message, setMessage] = useState("");
-  const [rating, setRating] = useState(10);
 
   const handleSubmit = (e) => {
     e.preventDefault();
