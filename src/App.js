@@ -25,9 +25,8 @@ const App = () => {
 
   const addFeedback = (newFeedback) => {
     newFeedback.id =
-      feedback.reduce((prev, cur) =>
-        +prev.id > +cur.id ? +prev.id : +cur.id
-      ) + 1;
+      feedback.reduce((prev, cur) => (+prev > +cur.id ? +prev : +cur.id), 0) +
+      1;
     setFeedback((prev) => [newFeedback, ...prev]);
   };
 
