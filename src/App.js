@@ -1,21 +1,17 @@
 import React from "react";
+import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
 import Header from "./components/Header";
 import { useState } from "react";
 import FeedbackData from "./data/feedbackData";
 import FeedbackList from "./components/FeedbackList";
 import FeedbackStats from "./components/FeedbackStats";
 import FeedbackForm from "./components/FeedbackForm";
+import AboutPage from "./pages/AboutPage";
+import { FaQuestionCircle } from "react-icons/fa";
+import PostPage from "./pages/PostPage";
 
 const App = () => {
   const [feedback, setFeedback] = useState(FeedbackData);
-  const title = "Blog Post";
-  const body = "This is my blogpost";
-  const comments = [
-    { id: 1, comment: "Comment one" },
-    { id: 2, comment: "Comment two" },
-    { id: 3, comment: "Comment three" },
-    { id: 4, comment: "Comment four" },
-  ];
 
   const deleteFeedback = (id) => {
     if (window.confirm("Are you sure you want to delete?")) {
@@ -30,26 +26,36 @@ const App = () => {
     setFeedback((prev) => [newFeedback, ...prev]);
   };
 
-  const showComments = true;
   return (
-    <>
+    <BrowserRouter>
       <Header />
       <div className="container">
-        <FeedbackForm addFeedback={addFeedback} />
-        <FeedbackStats feedback={feedback} />
-        <FeedbackList deleteFeedback={deleteFeedback} feedback={feedback} />
-        <h1>{title.toUpperCase()}</h1>
-        <h2>{body}</h2>
-        <h3>Comments: {showComments ? comments.length : 0}</h3>
-        {showComments && (
-          <ul>
-            {comments.map((comment) => (
-              <li key={comment.id}>{comment.comment}</li>
-            ))}
-          </ul>
-        )}
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <FeedbackForm addFeedback={addFeedback} />
+                <FeedbackStats feedback={feedback} />
+                <FeedbackList
+                  deleteFeedback={deleteFeedback}
+                  feedback={feedback}
+                />
+
+                <div className="about-link">
+                  <NavLink to="/about">
+                    <FaQuestionCircle size={30} />
+                  </NavLink>
+                </div>
+              </>
+            }
+          />
+          <Route path="/about" element={<AboutPage />} />
+          {/** Passing parameters to routes using :param */}
+          <Route path="/post/:id/:name" element={<PostPage />} />
+        </Routes>
       </div>
-    </>
+    </BrowserRouter>
   );
 };
 
