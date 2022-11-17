@@ -1,14 +1,26 @@
-import React, { createContext, useState } from "react";
-import FeedbackData from "../data/feedbackData";
+import React, { createContext, useEffect, useState } from "react";
 
 const FeedbackContext = createContext();
 
 export const FeedbackProvider = ({ children }) => {
-  const [feedback, setFeedback] = useState(FeedbackData);
+  const [feedback, setFeedback] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [feedbackItem, setFeedbackItem] = useState({
     item: { text: "", rating: 10 },
     editionMode: false,
   });
+
+  //Load Feedback Data
+  const fetchFeedback = async () => {
+    const res = await fetch("http://192.168.0.17:4000/feedback/");
+    const data = await res.json();
+    setIsLoading(false);
+    setFeedback(data);
+  };
+
+  useEffect(() => {
+    fetchFeedback();
+  }, []);
 
   const deleteFeedback = (id) => {
     if (window.confirm("Are you sure you want to delete?")) {
@@ -34,6 +46,7 @@ export const FeedbackProvider = ({ children }) => {
   const data = {
     feedback,
     feedbackItem,
+    isLoading,
     deleteFeedback,
     addFeedback,
     setFeedbackItem,
