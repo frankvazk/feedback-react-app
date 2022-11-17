@@ -5,12 +5,12 @@ import { FaEdit, FaTimes } from "react-icons/fa";
 import FeedbackContext from "../context/feedbackContext";
 
 const FeedbackItem = ({ item }) => {
-  const { deleteFeedback, setText, setRating, setItemId } =
-    useContext(FeedbackContext);
+  const { deleteFeedback, setFeedbackItem } = useContext(FeedbackContext);
   const handleEdit = (item) => {
-    setText(item.text);
-    setRating(item.rating);
-    setItemId(item.id);
+    setFeedbackItem({
+      item,
+      editionMode: true,
+    });
   };
   return (
     <Card>
