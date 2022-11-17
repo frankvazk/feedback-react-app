@@ -12,7 +12,7 @@ export const FeedbackProvider = ({ children }) => {
 
   //Load Feedback Data
   const fetchFeedback = async () => {
-    const res = await fetch("http://192.168.0.17:4000/feedback/");
+    const res = await fetch("/feedback/");
     const data = await res.json();
     setIsLoading(false);
     setFeedback(data);
@@ -22,23 +22,49 @@ export const FeedbackProvider = ({ children }) => {
     fetchFeedback();
   }, []);
 
-  const deleteFeedback = (id) => {
+  const deleteFeedback = async (id) => {
     if (window.confirm("Are you sure you want to delete?")) {
+      await fetch(`feedback/${id}`, {
+        method: "DELETE",
+      });
+
       setFeedback(feedback.filter((item) => item.id !== id));
     }
   };
 
-  const addFeedback = (newFeedback) => {
-    newFeedback.id =
+  const addFeedback = async (newFeedback) => {
+    /**
+     * No need to generate ID
+     * cause backend server generates it
+     * automatically
+     * newFeedback.id =
       feedback.reduce((prev, cur) => (+prev > +cur.id ? +prev : +cur.id), 0) +
       1;
-    setFeedback([newFeedback, ...feedback]);
+     */
+    const res = await fetch("feedback", {
+      method: "POST",
+      headers: {
+        "Content-type": "Application/json",
+      },
+      body: JSON.stringify(newFeedback),
+    });
+
+    const data = await res.json();
+    setFeedback([data, ...feedback]);
   };
 
-  const editFeedback = (newFeedback) => {
+  const editFeedback = async (newFeedback) => {
     const newList = [...feedback];
     const index = newList.findIndex((item) => item.id === newFeedback.id);
     newList[index] = newFeedback;
+    await fetch(`feedback/${newFeedback.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-type": "Application/json",
+      },
+      body: JSON.stringify(newFeedback),
+    });
+
     setFeedback(newList);
     setFeedbackItem({ item: { text: "", rating: 10 }, editionMode: false });
   };

@@ -1,19 +1,19 @@
 {
   "feedback": [
     {
-      "id": 1,
-      "rating": 10,
-      "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit. consequuntur vel vitae commodi alias voluptatem est voluptatum ipsa quae."
+      "text": "Modificando el registro numero 0 de la lista de feedbacks",
+      "rating": 7,
+      "id": 1
     },
     {
-      "id": 2,
+      "text": "Modificando el registro numero dos en el servidor json",
+      "rating": 6,
+      "id": 3
+    },
+    {
+      "text": "Creando y modificando un nuevo registro en el servidor",
       "rating": 9,
-      "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit. consequuntur vel vitae commodi alias voluptatem est voluptatum ipsa quae."
-    },
-    {
-      "id": 3,
-      "rating": 8,
-      "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit. consequuntur vel vitae commodi alias voluptatem est voluptatum ipsa quae."
+      "id": 4
     }
   ]
 }
